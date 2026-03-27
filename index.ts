@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 // Bump this string whenever you want to confirm which build is loaded at runtime.
 const BUILD_FINGERPRINT = "audio-chat@2026-03-06a";
 
-const PLUGIN_ID = "openclaw-audio-chat";
+const PLUGIN_ID = "openclaw-telegram-audio-chat";
 
 const DEFAULT_MAX_CHARS = 150;
 const DEFAULT_TOO_LONG_TIP = "本次回复字数过长未发语音";

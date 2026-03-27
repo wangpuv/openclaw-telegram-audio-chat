@@ -1,4 +1,4 @@
-# openclaw-audio-chat
+# openclaw-telegram-audio-chat
 
 OpenClaw plugin that auto-sends Telegram voice bubble replies from assistant text using local TTS.
 
@@ -15,7 +15,7 @@ OpenClaw plugin that auto-sends Telegram voice bubble replies from assistant tex
 After publication, install with:
 
 ```bash
-openclaw plugins install openclaw-audio-chat
+openclaw plugins install openclaw-telegram-audio-chat
 ```
 
 OpenClaw checks ClawHub first and falls back to npm automatically.

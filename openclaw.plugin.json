@@ -1,5 +1,5 @@
 {
-  "id": "openclaw-audio-chat",
+  "id": "openclaw-telegram-audio-chat",
   "name": "Audio Chat",
   "description": "Auto-send Telegram voice bubble replies from assistant text with configurable access and limits.",
   "version": "0.2.0",
