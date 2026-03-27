@@ -47,7 +47,7 @@ Use `extensions.audioChat` (or `audioChat`) in gateway config:
 This plugin requires:
 
 - `ffmpeg`
-- `edge-tts` available via Python (`python3 -m edge_tts`), or a pinned venv at `~/.openclaw/venvs/audio-chat/`
+- `edge-tts` available via Python (`python3 -m edge_tts`) or another dedicated Python environment
 
 ## Privacy and safety
 
