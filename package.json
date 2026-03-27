@@ -1,0 +1,26 @@
+{
+  "name": "openclaw-audio-chat",
+  "version": "0.2.0",
+  "description": "OpenClaw plugin that auto-sends Telegram voice bubble replies from assistant text using local TTS.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "openclaw",
+    "openclaw-plugin",
+    "telegram",
+    "tts",
+    "voice"
+  ],
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "openclaw": {
+    "extensions": ["./index.ts"]
+  },
+  "files": [
+    "index.ts",
+    "openclaw.plugin.json",
+    "README.md",
+    "LICENSE"
+  ]
+}
