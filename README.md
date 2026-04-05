@@ -57,6 +57,13 @@ This plugin requires:
 - Recommended default: keep `enabledByDefault: false`
 - Recommended default: keep `access.directOnly: true`
 
+## Compatibility
+
+| Plugin version | OpenClaw version |
+|---|---|
+| 0.3.x | v2026.4.2+ |
+| 0.2.x | v2026.3.x |
+
 ## Notes
 
-Currently focused on Telegram voice-note delivery (`asVoice=true`).
+Currently focused on Telegram voice-note delivery.
