@@ -1,9 +1,8 @@
 import { promises as fs } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-
 // Bump this string whenever you want to confirm which build is loaded at runtime.
-const BUILD_FINGERPRINT = "audio-chat@2026-03-06a";
+const BUILD_FINGERPRINT = "audio-chat@2026-04-05b";
 
 const PLUGIN_ID = "openclaw-telegram-audio-chat";
 
@@ -361,17 +360,14 @@ export default function register(api: any) {
     return chatId.startsWith("-");
   }
 
-  function resolveSendMessageTelegram() {
-    const sendMessageTelegram =
-      api?.runtime?.channels?.telegram?.sendMessageTelegram ??
-      api?.runtime?.channel?.telegram?.sendMessageTelegram ??
-      api?.runtime?.telegram?.sendMessageTelegram;
-    if (typeof sendMessageTelegram !== "function") {
+  async function resolveTelegramAdapter() {
+    const adapter = await api.runtime.channel.outbound.loadAdapter("telegram");
+    if (!adapter) {
       throw new Error(
-        `Telegram send API not available (runtime keys=${Object.keys(api?.runtime ?? {}).join(",")})`,
+        `Telegram outbound adapter not available (runtime keys=${Object.keys(api?.runtime ?? {}).join(",")})`,
       );
     }
-    return sendMessageTelegram;
+    return adapter;
   }
 
   const tooLongNotifiedAtByChat = new Map<string, number>();
@@ -393,9 +389,13 @@ export default function register(api: any) {
     const tipText = `${params.tipText}（${params.textLen}/${params.maxChars}）`;
 
     try {
-      const sendMessageTelegram = resolveSendMessageTelegram();
-      await sendMessageTelegram(params.to, tipText, {
-        ...(params.accountId ? { accountId: params.accountId } : {}),
+      const adapter = await resolveTelegramAdapter();
+      const cfg = api.runtime.config.loadConfig();
+      await adapter.sendText?.({
+        cfg,
+        to: params.to,
+        text: tipText,
+        accountId: params.accountId ?? null,
       });
       logger.info?.(
         `[${PLUGIN_ID}] too-long tip sent (chatId=${params.chatId} len=${params.textLen} max=${params.maxChars})`,
@@ -467,14 +467,16 @@ export default function register(api: any) {
         { timeoutMs: 60_000 },
       );
 
-      // 3) send voice bubble (asVoice=true)
-      // NOTE: Telegram send supports local media paths under allowed roots.
-      const sendMessageTelegram = resolveSendMessageTelegram();
-
-      await sendMessageTelegram(params.to, "", {
+      // 3) send voice bubble via channel outbound adapter (v2026.4.2+)
+      const adapter = await resolveTelegramAdapter();
+      const cfg = api.runtime.config.loadConfig();
+      await adapter.sendMedia?.({
+        cfg,
+        to: params.to,
+        text: "",
         mediaUrl: oggPath,
-        asVoice: true,
-        ...(params.accountId ? { accountId: params.accountId } : {}),
+        audioAsVoice: true,
+        accountId: params.accountId ?? null,
       });
     } finally {
       // Best-effort cleanup to avoid unbounded media growth.
