@@ -52,7 +52,7 @@ This plugin requires:
 ## Privacy and safety
 
 - No hardcoded personal user IDs or chat IDs
-- Voice synthesis is local (`edge-tts` + `ffmpeg`)
+- Voice synthesis uses Microsoft Edge TTS via the internet (`edge-tts` connects to `speech.platform.bing.com`). Text sent for synthesis is processed by Microsoft's servers.
 - The plugin only sends voice notes to chats where it is enabled
 - Recommended default: keep `enabledByDefault: false`
 - Recommended default: keep `access.directOnly: true`
